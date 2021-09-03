@@ -1,0 +1,107 @@
+<html>
+<head>
+    <title>Online Bookstore</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="http://127.0.0.1:8000/seller/seller_admin">ONLINE BOOKSTORE</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:white">
+           {{seller.name}}
+          </a>
+          <div class="dropdown-menu">
+<!--            <a class="dropdown-item" href="#" style=" padding: .25rem .5rem;"><i class="fa fa-user"></i> View Profile</a>-->
+<!--            <a class="dropdown-item" href="#" style=" padding: .25rem .5rem;"><i class="fa fa-pencil"></i> Update Profile</a>-->
+<!--            <a class="dropdown-item" href="#" style=" padding: .25rem .5rem;"><i class="fa fa-shopping-cart"></i> My Orders</a>-->
+            <a class="dropdown-item" href="{% url 's_logout' %}" style=" padding: .25rem .5rem;"><i class="fa fa-sign-out"></i> Logout</a>
+          </div>
+    </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+<div class="container" style="background:#b9b1b180; padding:20px;">
+    <div class="row">
+                <div class="col-12"><h5>UPDATE BOOK</h5></div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="text" required value="{{bk.book_name}}" name="book_name" placeholder="Book Name *" class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="text" required value="{{bk.book_author}}" name="book_author" placeholder="Book Author *" class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="text" required value="{{bk.book_language}}" name="book_language" placeholder="Book Language *" class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="number" required min="1" value="{{bk.book_pages}}" name="book_pages" placeholder="Book Pages *" class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="number" required min="1" value="{{bk.book_price}}" name="book_price" placeholder="Book Price *" class="form-control">
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="number" required min="1" value="{{bk.book_qty}}" name="book_qty" placeholder="Book Quantity *" class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <select name="book_avail" id="book_avail" value="{{bk.book_avail}}" required class="form-control">
+<!--                          <option value="True" selected disabled>is Book Available ?</option>-->
+                          <option value="True">Yes</option>
+                          <option value="False">No</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="file" disabled value="{{bk.book_img}}" name="book_img" required class="form-control">
+                  </div>
+              </div>
+              <div class="col-md-12">
+                   <label for="">Book Description *</label>
+                  <div class="form-group">
+                      <input type="text" class="form-control" name="book_desc" placeholder="Book Description *" value="{{bk.book_desc}}">
+<!--                      <textarea name="book_desc" value="{{bk.book_desc}}" required id="" cols="30" rows="2" class="form-control"></textarea>-->
+                  </div>
+              </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <input type="submit"  name="save"  class="btn btn-success" value="Update Book">
+                  </div>
+                </div>
+          </div>
+</div>
+    </form>
+</body>
+</html>

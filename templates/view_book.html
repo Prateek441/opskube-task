@@ -1,0 +1,251 @@
+<html>
+<head>
+    <title>Online Bookstore</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">ONLINE BOOKSTORE</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav ml-auto">
+<!--        <li>-->
+<!--      <form class="form-inline" action="/action_page.php">-->
+<!--    <input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+<!--    <button class="btn btn-success" type="submit">Search</button>-->
+<!--  </form>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <input id="myInput" type="text" class="form-control" name="search" placeholder="Search Book.." style="background:#343a40">-->
+<!--        </li>-->
+        <li class="nav-item">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-shopping-cart"></i> Cart {{cart_items}}</button>
+        </li>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#"><div style="width:40px; height:40px; border-radius:20px; overflow:hidden"><img-->
+<!--                src="https://www.tacthub.in/login/portal/panel/profile_image/IMG-20191214-WA0001.jpg" width="100%" alt=""></div></a>-->
+<!--      </li>-->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:white">
+           {{user.name}}
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" style="cursor:pointer; padding: .25rem .5rem;" data-target="#profile" data-toggle="modal"><i class="fa fa-user"></i> View Profile</a>
+<!--            <a class="dropdown-item" href="#" style="cursor:pointer; padding: .25rem .5rem;"><i class="fa fa-pencil"></i> Update Profile</a>-->
+            <a class="dropdown-item"  style="cursor:pointer; padding: .25rem .5rem;" data-target="#orders" data-toggle="modal"><i class="fa fa-shopping-cart"></i> My Orders</a>
+            <a class="dropdown-item" href="{% url 'logout' %}" style="cursor:pointer; padding: .25rem .5rem;"><i class="fa fa-sign-out"></i> Logout</a>
+          </div>
+    </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+    <div class="row">
+        {% for i in books %}
+        <div class="col-md-12" style="padding:10px;">
+            <div style="background:#ffe4e196; padding:15px 10px;">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div style=" height:300px; width:100%; overflow:hidden; ">
+                            <img src="{{i.book_img.url}}" width="100%" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h2>{{i.book_name}}</h2>
+                        <div class="row">
+                            <div class="col-6">
+                                <p style="font-size:16px;">Author: <b>{{i.book_author}}</b></p>
+                            </div>
+                            <div class="col-6">
+                                <p style="font-size:16px;">Seller: <b>{{i.book_seller.name}}</b></p>
+                            </div>
+                            <div class="col-6">
+                                <p style="font-size:16px;">Language: <b>{{i.book_language}}</b></p>
+                            </div>
+                            <div class="col-6">
+                                <p style="font-size:16px;">Pages: <b>{{i.book_pages}}</b></p>
+                            </div>
+                            <div class="col-6">
+                                <p style="font-size:16px;">Availability: <b>{% if i.book_avail == True %}Available{% endif %} {% if i.book_avail == False %}Sold Out{% endif %}</b></p>
+                            </div>
+                            <div class="col-6">
+                                <p style="font-size:18px; ">Price: <b><i class="fa fa-inr" aria-hidden="true"></i> {{i.book_price}}</b></p>
+                            </div>
+                            <div class="col-12">
+                                <p style="font-size:16px;"><i><b>Book Description:</b></i> {{i.book_desc}}</p>
+                            </div>
+                        </div>
+<!--                        {% if i.book_avail == True %}-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-6">-->
+<!--                                <center><button class="btn btn-primary" style="padding:6px 9px; font-size:12px;">Add to Cart</button></center>-->
+<!--                            </div>-->
+<!--                            <div class="col-6">-->
+<!--                                <button class="btn btn-primary" style="padding:6px 9px; font-size:12px;">Buy Now</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        {% endif %}-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> My Shopping Cart</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="table">
+              <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Sub Total</th>
+                    <th>Remove</th>
+                </tr>
+              </thead>
+              {% for i in cart %}
+              <tr>
+                  <td>{{ forloop.counter }}
+                  <td>{{i.book}}</td>
+                  <td><i class="fa fa-inr"></i> {{i.price}}</td>
+                  <td>
+                      <select name="qty" id="qty" value="{{i.qty}}" class="form-control">
+                          <option value="1">1</option>
+<!--                          <option value="2">2</option>-->
+<!--                          <option value="3">3</option>-->
+<!--                          <option value="4">4</option>-->
+<!--                          <option value="5">5</option>-->
+                      </select>
+                  </td>
+                  <td><i class="fa fa-inr"></i>  {{i.price}}</td>
+                  <td><a href="{% url  'del_cart' i.id %}"><i class="fa fa-trash"></i></a></td>
+              </tr>
+              {% endfor %}
+              <tr>
+                  <td>Total: <b><i class="fa fa-inr"></i> {{total}}</b></td>
+              </tr>
+          </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <a href="{% url 'cart_to_buy' %}"><button type="button" class="btn btn-primary">Proceed to Buy</button></a>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<div class="modal" id="orders">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"><i class="fa fa-shopping-cart"></i> My Orders</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="table">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Book Name</th>
+                    <th>Seller</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Sub Total</th>
+                </tr>
+              </thead>
+              {% for i in order %}
+              <tr>
+                  <td>{{ forloop.counter }}
+                  <td>{{i.rel_book}}</td>
+                  <td>{{i.rel_seller_name}}</td>
+
+                  <td><i class="fa fa-inr"></i>  {{i.book_price}}</td>
+                  <td>
+                      {{i.book_qty}}
+                  </td>
+                  <td>{{i.book_total_price}}</td>
+              </tr>
+              {% endfor %}
+
+          </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+<!--            <a href="{% url 'cart_to_buy' %}"><button type="button" class="btn btn-primary" data-dismiss="modal">Proceed to Buy</button></a>-->
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+ <div class="modal fade" id="profile">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"><i class="fa fa-user"></i> {{user.name}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-md-6">
+                  <center><div style="width:200px; height:200px; border-radius:100px; overflow:hidden"><img src="{{upro.image.url}}" width="100%" alt=""></div></center>
+              </div>
+              <div class="col-md-6">
+                  <p>Gender: <b style="text-transform:capitalize">{{upro.gender}}</b></p>
+                  <p>DOB: <b style="text-transform:capitalize">{{upro.dob}}</b></p>
+                  <p>City: <b style="text-transform:capitalize">{{upro.city}}</b></p>
+                  <p>State: <b style="text-transform:capitalize">{{upro.state}}</b></p>
+                  <p> <i style="text-transform:capitalize">{{upro.about}}</i></p>
+              </div>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
